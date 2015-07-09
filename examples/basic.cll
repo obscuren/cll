@@ -1,0 +1,8 @@
+var a = 10
+var b = a
+b = a
+asm {
+	PUSH1 10
+	PUSH1 10
+	ADD
+}
