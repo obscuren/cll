@@ -35,12 +35,12 @@ const (
 	itemEof          itemType = 0
 	itemIdentifier            = ID
 	itemNumber                = NUM
-	itemVar                   = VAR
 	itemEndStatement          = END_STMT
 	itemAssign                = ASSIGN
 	itemAsm                   = ASM
 	itemAsmBody               = ASM_BODY
 
+	itemColon  = COLON
 	itemLbrace = LBRACE
 	itemRbrace = RBRACE
 )
@@ -92,8 +92,6 @@ func lexStatement(l *Lexer) stateFn {
 	l.acceptRun(acceptance)
 
 	switch l.blob() {
-	case "var":
-		l.emit(itemVar)
 	case "asm":
 		l.emit(itemAsm)
 
@@ -294,10 +292,8 @@ func lexText(l *Lexer) stateFn {
 			return lexComment
 		case r == ';':
 			l.emit(itemEndStatement)
-			/*
-				case r == ':':
-					l.emit(itemColon)
-			*/
+		case r == ':':
+			l.emit(itemColon)
 		case isOperator(r):
 			l.backup()
 

@@ -1,5 +1,5 @@
-var a = 10
-var b = a
+a := 10
+b := a
 b = a
 asm {
 	PUSH1 10

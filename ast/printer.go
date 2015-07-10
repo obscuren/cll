@@ -40,7 +40,7 @@ func stringTree(n ASTNode, no int) (ret string) {
 		ret += sprintf(no+1, "Lhs: %s", stringTree(n.Lhs, no+1))
 		ret += sprintf(no+1, "Rhs: %s", stringTree(n.Rhs, no+1))
 
-	case *DeclNode:
+	case *DeclObj:
 		ret += sprintf(no+1, "Id: %s\n", n.Id)
 	case *AsmExpr:
 		ret += sprintf(no+1, "Asm: \"%s\"\n", strings.Replace(n.Asm, "\n", " ", -1))

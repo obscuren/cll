@@ -69,17 +69,17 @@ func (l litType) String() string {
 	}
 }
 
-type DeclNode struct {
+type DeclObj struct {
 	parent ASTNode
 	Id     string
 }
 
 func Decl(id string) ASTNode {
-	return &DeclNode{nil, id}
+	return &DeclObj{nil, id}
 }
 
-func (ln *DeclNode) Parent() ASTNode     { return ln.parent }
-func (ln *DeclNode) SetParent(n ASTNode) { ln.parent = n }
+func (ln *DeclObj) Parent() ASTNode     { return ln.parent }
+func (ln *DeclObj) SetParent(n ASTNode) { ln.parent = n }
 
 type LiteralNode struct {
 	parent ASTNode

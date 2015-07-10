@@ -19,12 +19,17 @@ var (
 		Name:  "debug",
 		Usage: "output full trace logs",
 	}
+	StackFlag = cli.BoolFlag{
+		Name:  "nostack",
+		Usage: "disables the stack. Handy for full assembler source",
+	}
 )
 
 func init() {
 	app = utils.NewApp("0.0.1", "cll compiler")
 	app.Flags = []cli.Flag{
 		DebugFlag,
+		StackFlag,
 	}
 	app.Action = run
 }

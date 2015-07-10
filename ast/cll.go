@@ -14,23 +14,23 @@ type yySymType struct {
 	node ASTNode
 }
 
-const VAR = 57346
-const END_STMT = 57347
-const ASSIGN = 57348
-const ASM = 57349
-const LBRACE = 57350
-const RBRACE = 57351
+const END_STMT = 57346
+const ASSIGN = 57347
+const ASM = 57348
+const LBRACE = 57349
+const RBRACE = 57350
+const COLON = 57351
 const ID = 57352
 const NUM = 57353
 const ASM_BODY = 57354
 
 var yyToknames = []string{
-	"VAR",
 	"END_STMT",
 	"ASSIGN",
 	"ASM",
 	"LBRACE",
 	"RBRACE",
+	"COLON",
 	"ID",
 	"NUM",
 	"ASM_BODY",
@@ -56,23 +56,23 @@ const yyPrivate = 57344
 var yyTokenNames []string
 var yyStates []string
 
-const yyLast = 26
+const yyLast = 27
 
 var yyAct = []int{
 
-	5, 4, 6, 8, 12, 20, 11, 11, 13, 16,
-	21, 17, 15, 8, 12, 18, 19, 11, 13, 7,
-	9, 10, 3, 2, 14, 1,
+	5, 6, 8, 11, 20, 8, 11, 7, 12, 15,
+	7, 12, 14, 22, 14, 19, 13, 17, 18, 21,
+	16, 9, 10, 4, 3, 2, 1,
 }
 var yyPact = []int{
 
-	-1000, -1000, -3, -1000, -4, -1000, -1000, 6, 7, -1000,
-	-1000, -1000, 3, -1000, 7, 7, -1000, -7, -1000, -1000,
-	1, -1000,
+	-1000, -1000, -3, -1000, 7, -1000, -1000, -1000, 0, -1000,
+	-1000, 10, -1000, 13, 0, -1000, 9, -8, 0, -1000,
+	5, -1000, -1000,
 }
 var yyPgo = []int{
 
-	0, 25, 23, 22, 0, 21, 19, 20,
+	0, 26, 25, 24, 0, 22, 20, 21,
 }
 var yyR1 = []int{
 
@@ -81,20 +81,20 @@ var yyR1 = []int{
 }
 var yyR2 = []int{
 
-	0, 1, 2, 0, 3, 1, 1, 3, 2, 1,
+	0, 1, 2, 0, 4, 1, 1, 3, 2, 1,
 	1, 1, 1, 1, 4,
 }
 var yyChk = []int{
 
-	-1000, -1, -2, -3, 4, -4, 5, -6, 6, -7,
-	-5, 10, 7, 11, -6, 6, -4, 8, -4, -4,
-	12, 9,
+	-1000, -1, -2, -3, -6, -4, 4, 10, 5, -7,
+	-5, 6, 11, 9, 5, -4, -6, 7, 5, -4,
+	12, -4, 8,
 }
 var yyDef = []int{
 
-	3, -2, 1, 2, 0, 5, 6, 11, 0, 9,
-	10, 13, 0, 12, 0, 0, 8, 0, 4, 7,
-	0, 14,
+	3, -2, 1, 2, 11, 5, 6, 13, 0, 9,
+	10, 0, 12, 0, 0, 8, 11, 0, 0, 7,
+	0, 4, 14,
 }
 var yyTok1 = []int{
 
@@ -361,7 +361,7 @@ yydefault:
 	case 4:
 		//line ast/cll.y:44
 		{
-			yyVAL.node = Decleration(yyS[yypt-1].node, yyS[yypt-0].node)
+			yyVAL.node = Decleration(yyS[yypt-3].node, yyS[yypt-0].node)
 			yyS[yypt-0].node.SetParent(yyVAL.node)
 		}
 	case 5:

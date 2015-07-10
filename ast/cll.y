@@ -11,7 +11,7 @@ var SynTree ASTNode
 	node ASTNode
 }
 
-%token VAR END_STMT ASSIGN ASM LBRACE RBRACE
+%token END_STMT ASSIGN ASM LBRACE RBRACE COLON
 %token <str> ID NUM ASM_BODY
 %type <node> program statement_list statement expression literal variable
 %type <node> buildin
@@ -40,10 +40,10 @@ statement_list
 	;
 
 statement
-	: VAR variable expression
+	: variable COLON ASSIGN expression
 	{
-		$$ = Decleration($2, $3)
-		$3.SetParent($$)
+		$$ = Decleration($1, $4)
+		$4.SetParent($$)
 	}
 	| expression { $$ = $1 }
 	| END_STMT { $$ = Empty(); }
