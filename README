@@ -1,0 +1,13 @@
+# C Like Language
+
+An Ethereum EVM Compiler suit and language definition
+
+- [ ] Language definition
+	- Statements
+		- [x] Variables
+	- [ ] Expressions
+		- [ ] Flow control
+		- [x] Assignments
+- [ ] AST stage
+- [ ] Assembler
+- [ ] Optimiser
