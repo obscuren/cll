@@ -7,7 +7,6 @@ if a == b {
 } else if b == c {
 	c := 20
 } else if b == d {
-	d := 30
 } else {
 	d := 40
 }

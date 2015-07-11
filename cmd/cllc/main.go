@@ -50,7 +50,7 @@ func run(ctx *cli.Context) {
 	tree := ast.ParseFile(fn, string(src))
 
 	if debug {
-		fmt.Println("AST")
+		fmt.Println("# AST Stage ---")
 		ast.Print(tree)
 	}
 
@@ -59,7 +59,7 @@ func run(ctx *cli.Context) {
 		glog.Exitln(err)
 	}
 	if debug {
-		fmt.Println("IR")
+		fmt.Println("# IR Stage ---")
 		ir.Print(intermediate)
 	}
 

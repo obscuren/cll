@@ -2,20 +2,22 @@
 
 An Ethereum EVM Compiler suit and language definition
 
-- [ ] == TODO
-- [x] == Finishid
-- [~] == In progress
+# Install
 
-```
+1. `go get github.com/obscuren/cll`
+2. `cd $GOPATH/github.com/obscuren/cll`
+3. `make`
+
+# Tasks
+
 - [ ] Language definition
-	- Statements
+	- [ ] Statements
 		- [x] Variables
 	- [ ] Expressions
-		- [~] Conditions
+		- [ ] Conditions
 		- [ ] Flow control
 			- [x] if / else / else if
 		- [x] Assignments
 - [ ] AST stage
 - [ ] Assembler
 - [ ] Optimiser
-```

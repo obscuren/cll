@@ -1,10 +1,13 @@
 package ast
 
+// ASTNode is the basic buliding block of the Abstract Syntax Tree. All nodes
+// must implement its interface
 type ASTNode interface {
 	SetParent(ASTNode)
 	Parent() ASTNode
 }
 
+// Empty node represents void
 type EmptyNode struct {
 	parent ASTNode
 }
@@ -16,6 +19,7 @@ func Empty() ASTNode {
 func (en *EmptyNode) SetParent(n ASTNode) { en.parent = n }
 func (en *EmptyNode) Parent() ASTNode     { return en.parent }
 
+// BlockStmt is a list of statements and expressions
 type BlockStmt struct {
 	parent ASTNode
 	list   []ASTNode
@@ -36,6 +40,7 @@ func (sl *BlockStmt) Add(n ...ASTNode) {
 	}
 }
 
+// GenDecl is a generic variable decleration
 type GenDecl struct {
 	parent ASTNode
 	Decl   ASTNode
@@ -49,6 +54,7 @@ func Decleration(decl ASTNode, n1 ASTNode) ASTNode {
 func (vd *GenDecl) SetParent(n ASTNode) { vd.parent = n }
 func (vd *GenDecl) Parent() ASTNode     { return vd.parent }
 
+// AssignExpr represents an assignment operation in the tree
 type AssignExpr struct {
 	parent ASTNode
 	Lhs    ASTNode
@@ -80,6 +86,7 @@ func (l litType) String() string {
 	}
 }
 
+// DeclObj is a decleration of an object (variable)
 type DeclObj struct {
 	parent ASTNode
 	Id     string
@@ -92,6 +99,7 @@ func Decl(id string) ASTNode {
 func (ln *DeclObj) Parent() ASTNode     { return ln.parent }
 func (ln *DeclObj) SetParent(n ASTNode) { ln.parent = n }
 
+// LeteralNode is a language literal (number, string, etc)
 type LiteralNode struct {
 	parent ASTNode
 	Value  string
@@ -105,6 +113,7 @@ func Literal(v string, t litType) *LiteralNode {
 func (ln *LiteralNode) Parent() ASTNode     { return ln.parent }
 func (ln *LiteralNode) SetParent(n ASTNode) { ln.parent = n }
 
+// AsmExpr represents a block of assembly
 type AsmExpr struct {
 	parent ASTNode
 	Asm    string
@@ -117,6 +126,7 @@ func Asm(asm string) ASTNode {
 func (en *AsmExpr) SetParent(n ASTNode) { en.parent = n }
 func (en *AsmExpr) Parent() ASTNode     { return en.parent }
 
+// IfExp is an if expression with an optional else expression
 type IfExpr struct {
 	parent ASTNode
 	Cond   ASTNode
@@ -131,6 +141,7 @@ func If(cond, body, els ASTNode) ASTNode {
 func (en *IfExpr) SetParent(n ASTNode) { en.parent = n }
 func (en *IfExpr) Parent() ASTNode     { return en.parent }
 
+// BinaryExpr is a binary condition
 type BinaryExpr struct {
 	parent ASTNode
 	X, Y   ASTNode
@@ -144,6 +155,7 @@ func Binary(x ASTNode, op string, y ASTNode) ASTNode {
 func (en *BinaryExpr) SetParent(n ASTNode) { en.parent = n }
 func (en *BinaryExpr) Parent() ASTNode     { return en.parent }
 
+// Ident reprents a variable (identifier)
 type Ident struct {
 	parent ASTNode
 	Name   string
