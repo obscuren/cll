@@ -20,9 +20,12 @@ const ASM = 57348
 const LBRACE = 57349
 const RBRACE = 57350
 const COLON = 57351
-const ID = 57352
-const NUM = 57353
-const ASM_BODY = 57354
+const IF = 57352
+const ELSE = 57353
+const ID = 57354
+const NUM = 57355
+const ASM_BODY = 57356
+const OP = 57357
 
 var yyToknames = []string{
 	"END_STMT",
@@ -31,9 +34,12 @@ var yyToknames = []string{
 	"LBRACE",
 	"RBRACE",
 	"COLON",
+	"IF",
+	"ELSE",
 	"ID",
 	"NUM",
 	"ASM_BODY",
+	"OP",
 }
 var yyStatenames = []string{}
 
@@ -41,7 +47,7 @@ const yyEofCode = 1
 const yyErrCode = 2
 const yyMaxDepth = 200
 
-//line ast/cll.y:83
+//line ast/cll.y:120
 
 //line yacctab:1
 var yyExca = []int{
@@ -50,51 +56,60 @@ var yyExca = []int{
 	-2, 0,
 }
 
-const yyNprod = 15
+const yyNprod = 21
 const yyPrivate = 57344
 
 var yyTokenNames []string
 var yyStates []string
 
-const yyLast = 27
+const yyLast = 52
 
 var yyAct = []int{
 
-	5, 6, 8, 11, 20, 8, 11, 7, 12, 15,
-	7, 12, 14, 22, 14, 19, 13, 17, 18, 21,
-	16, 9, 10, 4, 3, 2, 1,
+	5, 23, 7, 25, 2, 26, 8, 12, 24, 16,
+	17, 9, 19, 17, 13, 29, 22, 6, 8, 12,
+	14, 35, 27, 9, 32, 4, 13, 24, 31, 30,
+	34, 33, 6, 8, 12, 21, 20, 15, 9, 28,
+	4, 13, 8, 12, 18, 10, 11, 9, 3, 17,
+	13, 1,
 }
 var yyPact = []int{
 
-	-1000, -1000, -3, -1000, 7, -1000, -1000, -1000, 0, -1000,
-	-1000, 10, -1000, 13, 0, -1000, 9, -8, 0, -1000,
-	5, -1000, -1000,
+	-1000, -1000, 28, -1000, 11, -1000, -1000, 32, 37, -2,
+	-1000, -1000, 29, -1000, 30, 37, -1000, -1000, 20, -12,
+	-9, 37, -1000, 4, -1000, -2, 16, -1000, -1000, 1,
+	13, -1000, -1000, -1000, -1000, -1000,
 }
 var yyPgo = []int{
 
-	0, 26, 25, 24, 0, 22, 20, 21,
+	0, 51, 4, 48, 0, 46, 2, 45, 1, 44,
+	39,
 }
 var yyR1 = []int{
 
 	0, 1, 2, 2, 3, 3, 3, 4, 4, 4,
-	4, 4, 5, 6, 7,
+	4, 4, 4, 10, 10, 10, 9, 8, 5, 6,
+	7,
 }
 var yyR2 = []int{
 
-	0, 1, 2, 0, 4, 1, 1, 3, 2, 1,
-	1, 1, 1, 1, 4,
+	0, 1, 2, 0, 4, 1, 1, 3, 2, 4,
+	1, 1, 1, 2, 2, 0, 3, 3, 1, 1,
+	4,
 }
 var yyChk = []int{
 
-	-1000, -1, -2, -3, -6, -4, 4, 10, 5, -7,
-	-5, 6, 11, 9, 5, -4, -6, 7, 5, -4,
-	12, -4, 8,
+	-1000, -1, -2, -3, 12, -4, 4, -6, 5, 10,
+	-7, -5, 6, 13, 9, 5, -4, 12, -9, -6,
+	7, 5, -4, -8, 7, 15, 14, -4, -10, 11,
+	-2, -6, 8, -8, -4, 8,
 }
 var yyDef = []int{
 
-	3, -2, 1, 2, 11, 5, 6, 13, 0, 9,
-	10, 0, 12, 0, 0, 8, 11, 0, 0, 7,
-	0, 4, 14,
+	3, -2, 1, 2, 19, 5, 6, 12, 0, 0,
+	10, 11, 0, 18, 0, 0, 8, 19, 0, 0,
+	0, 0, 7, 15, 3, 0, 0, 4, 9, 0,
+	0, 16, 20, 13, 14, 17,
 }
 var yyTok1 = []int{
 
@@ -103,7 +118,7 @@ var yyTok1 = []int{
 var yyTok2 = []int{
 
 	2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
-	12,
+	12, 13, 14, 15,
 }
 var yyTok3 = []int{
 	0,
@@ -342,11 +357,11 @@ yydefault:
 	case 2:
 		//line ast/cll.y:27
 		{
-			if list, ok := yyS[yypt-1].node.(*StmtList); ok {
+			if list, ok := yyS[yypt-1].node.(*BlockStmt); ok {
 				list.Add(yyS[yypt-0].node)
 				yyVAL.node = yyS[yypt-1].node
 			} else {
-				node := StatementList().(*StmtList)
+				node := BlockStatement().(*BlockStmt)
 				node.Add(yyS[yypt-1].node, yyS[yypt-0].node)
 				yyS[yypt-1].node.SetParent(node)
 				yyVAL.node = node
@@ -361,7 +376,7 @@ yydefault:
 	case 4:
 		//line ast/cll.y:44
 		{
-			yyVAL.node = Decleration(yyS[yypt-3].node, yyS[yypt-0].node)
+			yyVAL.node = Decleration(Decl(yyS[yypt-3].str), yyS[yypt-0].node)
 			yyS[yypt-0].node.SetParent(yyVAL.node)
 		}
 	case 5:
@@ -387,32 +402,69 @@ yydefault:
 			yyVAL.node = yyS[yypt-0].node
 		}
 	case 9:
-		//line ast/cll.y:63
+		//line ast/cll.y:64
 		{
-			yyVAL.node = yyS[yypt-0].node
+			yyVAL.node = If(yyS[yypt-2].node, yyS[yypt-1].node, yyS[yypt-0].node)
+			yyS[yypt-2].node.SetParent(yyVAL.node)
+			yyS[yypt-1].node.SetParent(yyS[yypt-1].node)
+			if yyS[yypt-0].node != nil {
+				yyS[yypt-0].node.SetParent(yyVAL.node)
+			}
 		}
 	case 10:
-		//line ast/cll.y:64
+		//line ast/cll.y:72
 		{
 			yyVAL.node = yyS[yypt-0].node
 		}
 	case 11:
-		//line ast/cll.y:65
+		//line ast/cll.y:73
 		{
 			yyVAL.node = yyS[yypt-0].node
 		}
 	case 12:
-		//line ast/cll.y:69
+		//line ast/cll.y:74
+		{
+			yyVAL.node = yyS[yypt-0].node
+		}
+	case 13:
+		//line ast/cll.y:79
+		{
+			yyVAL.node = yyS[yypt-0].node
+		}
+	case 14:
+		//line ast/cll.y:83
+		{
+			yyVAL.node = yyS[yypt-0].node
+		}
+	case 15:
+		//line ast/cll.y:86
+		{
+			yyVAL.node = nil
+		}
+	case 16:
+		//line ast/cll.y:91
+		{
+			yyVAL.node = Binary(yyS[yypt-2].node, yyS[yypt-1].str, yyS[yypt-0].node)
+			yyS[yypt-2].node.SetParent(yyVAL.node)
+			yyS[yypt-0].node.SetParent(yyVAL.node)
+		}
+	case 17:
+		//line ast/cll.y:100
+		{
+			yyVAL.node = yyS[yypt-1].node
+		}
+	case 18:
+		//line ast/cll.y:106
 		{
 			yyVAL.node = Literal(yyS[yypt-0].str, numTy)
 		}
-	case 13:
-		//line ast/cll.y:73
+	case 19:
+		//line ast/cll.y:110
 		{
-			yyVAL.node = Decl(yyS[yypt-0].str)
+			yyVAL.node = Id(yyS[yypt-0].str)
 		}
-	case 14:
-		//line ast/cll.y:78
+	case 20:
+		//line ast/cll.y:115
 		{
 			yyVAL.node = Asm(yyS[yypt-1].str)
 		}

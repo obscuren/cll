@@ -1,7 +1,18 @@
 a := 10
 b := a
 b = a
-asm {
+
+if a == b {
+	c := 10
+} else if b == c {
+	c := 20
+} else if b == d {
+	d := 30
+} else {
+	d := 40
+}
+
+d := asm {
 	PUSH1 10
 	PUSH1 10
 	ADD

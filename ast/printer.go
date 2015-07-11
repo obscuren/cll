@@ -27,7 +27,7 @@ func stringTree(n ASTNode, no int) (ret string) {
 	case *GenDecl:
 		ret += sprintf(no+1, "Decl: %s", stringTree(n.Decl, no+1))
 		ret += sprintf(no+1, "Value: %s", stringTree(n.Value, no+1))
-	case *StmtList:
+	case *BlockStmt:
 		ret += sprintf(no+1, "List: []Stmt (len = %d) {\n", len(n.List()))
 		for i, node := range n.List() {
 			ret += sprintf(no+2, "%d: %s", i, stringTree(node, no+2))
@@ -44,6 +44,18 @@ func stringTree(n ASTNode, no int) (ret string) {
 		ret += sprintf(no+1, "Id: %s\n", n.Id)
 	case *AsmExpr:
 		ret += sprintf(no+1, "Asm: \"%s\"\n", strings.Replace(n.Asm, "\n", " ", -1))
+	case *IfExpr:
+		ret += sprintf(no+1, "Cond: %s", stringTree(n.Cond, no+1))
+		ret += sprintf(no+1, "Body: %s", stringTree(n.Body, no+1))
+		if n.Else != nil {
+			ret += sprintf(no+1, "Else: %s", stringTree(n.Else, no+1))
+		}
+	case *BinaryExpr:
+		ret += sprintf(no+1, "X: %s", stringTree(n.X, no+1))
+		ret += sprintf(no+1, "Op: %s\n", n.Op)
+		ret += sprintf(no+1, "Y: %s", stringTree(n.Y, no+1))
+	case *Ident:
+		ret += sprintf(no+1, "Name: %s\n", n.Name)
 	case nil, *EmptyNode:
 		ret += sprintf(no+1, "%s<nil>\n", identSize)
 	}

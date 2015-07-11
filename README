@@ -2,12 +2,20 @@
 
 An Ethereum EVM Compiler suit and language definition
 
+- [ ] == TODO
+- [x] == Finishid
+- [~] == In progress
+
+```
 - [ ] Language definition
 	- Statements
 		- [x] Variables
 	- [ ] Expressions
+		- [~] Conditions
 		- [ ] Flow control
+			- [x] if / else / else if
 		- [x] Assignments
 - [ ] AST stage
 - [ ] Assembler
 - [ ] Optimiser
+```

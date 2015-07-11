@@ -5,19 +5,30 @@ type ASTNode interface {
 	Parent() ASTNode
 }
 
-type StmtList struct {
+type EmptyNode struct {
+	parent ASTNode
+}
+
+func Empty() ASTNode {
+	return &EmptyNode{nil}
+}
+
+func (en *EmptyNode) SetParent(n ASTNode) { en.parent = n }
+func (en *EmptyNode) Parent() ASTNode     { return en.parent }
+
+type BlockStmt struct {
 	parent ASTNode
 	list   []ASTNode
 }
 
-func StatementList() ASTNode {
-	return &StmtList{nil, nil}
+func BlockStatement() ASTNode {
+	return &BlockStmt{nil, nil}
 }
 
-func (sl *StmtList) SetParent(n ASTNode) { sl.parent = n }
-func (sl *StmtList) Parent() ASTNode     { return sl.parent }
-func (sl *StmtList) List() []ASTNode     { return sl.list }
-func (sl *StmtList) Add(n ...ASTNode) {
+func (sl *BlockStmt) SetParent(n ASTNode) { sl.parent = n }
+func (sl *BlockStmt) Parent() ASTNode     { return sl.parent }
+func (sl *BlockStmt) List() []ASTNode     { return sl.list }
+func (sl *BlockStmt) Add(n ...ASTNode) {
 	for _, node := range n {
 		if _, ok := node.(*EmptyNode); !ok {
 			sl.list = append(sl.list, node)
@@ -106,13 +117,41 @@ func Asm(asm string) ASTNode {
 func (en *AsmExpr) SetParent(n ASTNode) { en.parent = n }
 func (en *AsmExpr) Parent() ASTNode     { return en.parent }
 
-type EmptyNode struct {
+type IfExpr struct {
 	parent ASTNode
+	Cond   ASTNode
+	Body   ASTNode
+	Else   ASTNode
 }
 
-func Empty() ASTNode {
-	return &EmptyNode{nil}
+func If(cond, body, els ASTNode) ASTNode {
+	return &IfExpr{nil, cond, body, els}
 }
 
-func (en *EmptyNode) SetParent(n ASTNode) { en.parent = n }
-func (en *EmptyNode) Parent() ASTNode     { return en.parent }
+func (en *IfExpr) SetParent(n ASTNode) { en.parent = n }
+func (en *IfExpr) Parent() ASTNode     { return en.parent }
+
+type BinaryExpr struct {
+	parent ASTNode
+	X, Y   ASTNode
+	Op     string
+}
+
+func Binary(x ASTNode, op string, y ASTNode) ASTNode {
+	return &BinaryExpr{nil, x, y, op}
+}
+
+func (en *BinaryExpr) SetParent(n ASTNode) { en.parent = n }
+func (en *BinaryExpr) Parent() ASTNode     { return en.parent }
+
+type Ident struct {
+	parent ASTNode
+	Name   string
+}
+
+func Id(name string) ASTNode {
+	return &Ident{nil, name}
+}
+
+func (en *Ident) SetParent(n ASTNode) { en.parent = n }
+func (en *Ident) Parent() ASTNode     { return en.parent }

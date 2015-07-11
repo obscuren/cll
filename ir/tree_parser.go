@@ -11,7 +11,7 @@ func ParseTree(tree ast.ASTNode) (*list.List, error) {
 	list := list.New()
 
 	switch node := tree.(type) {
-	case *ast.StmtList:
+	case *ast.BlockStmt:
 		for _, stmt := range node.List() {
 			l, err := ParseTree(stmt)
 			if err != nil {

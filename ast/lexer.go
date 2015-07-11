@@ -39,6 +39,9 @@ const (
 	itemAssign                = ASSIGN
 	itemAsm                   = ASM
 	itemAsmBody               = ASM_BODY
+	itemIf                    = IF
+	itemElse                  = ELSE
+	itemOp                    = OP
 
 	itemColon  = COLON
 	itemLbrace = LBRACE
@@ -96,6 +99,10 @@ func lexStatement(l *Lexer) stateFn {
 		l.emit(itemAsm)
 
 		return lexAsm
+	case "if":
+		l.emit(itemIf)
+	case "else":
+		l.emit(itemElse)
 	default:
 		l.emit(itemIdentifier)
 	}
@@ -211,9 +218,9 @@ func lexOperator(l *Lexer) stateFn {
 				l.emit(itemMul)
 			case "++", "--":
 				l.emit(itemDop)
-			default:
-				l.emit(itemOp)
 		*/
+	default:
+		l.emit(itemOp)
 	}
 
 	return lexText
