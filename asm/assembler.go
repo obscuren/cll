@@ -15,7 +15,16 @@ func Assemble(ir *list.List) (asm []byte, err error) {
 		switch len(code) {
 		case 2:
 			asm = append(asm, byte(vm.StringToOp(code[0])))
-			asm = append(asm, common.String2Big(code[1]).Bytes()...)
+
+			if len(code[1]) > 1 && code[1][:2] == "0x" {
+				asm = append(asm, common.FromHex(code[1])...)
+			} else {
+				num := common.String2Big(code[1]).Bytes()
+				if len(num) == 0 {
+					num = []byte{0}
+				}
+				asm = append(asm, num...)
+			}
 		case 1:
 			asm = append(asm, byte(vm.StringToOp(code[0])))
 		default:

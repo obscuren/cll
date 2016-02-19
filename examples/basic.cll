@@ -1,5 +1,6 @@
+var d
 a := 10
-b := a
+var b := a
 b = a
 
 if a == b {
@@ -11,8 +12,11 @@ if a == b {
 	d := 40
 }
 
-d := asm {
+asm {
+	; this is a comment
 	PUSH1 10
 	PUSH1 10
 	ADD
+	PUSH2 0x0000
+	PUSH1 0
 }
